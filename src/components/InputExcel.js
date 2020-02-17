@@ -15,6 +15,13 @@ class InputExcel extends Component {
     }
   }
 
+
+  //WARNING! To be deprecated in React v17. Use componentDidMount instead.
+  componentWillMount() {
+    this.props.getPCFail();
+  }
+
+
   ProcessExcel = (data) => {
     //Read the Excel File data.
     var workbook = XLSX.read(data, {
@@ -81,7 +88,7 @@ class InputExcel extends Component {
         if (reader.readAsBinaryString) {
           reader.onload = function (e) {
 
-            console.log(e.target.result);
+            // console.log(e.target.result);
 
             _this.ProcessExcel(e.target.result);
           };
@@ -108,6 +115,7 @@ class InputExcel extends Component {
 
 
   render() {
+    console.log(this.props.items.listItem);
 
     return (
       <div className="App ">
@@ -115,7 +123,7 @@ class InputExcel extends Component {
         <label htmlFor="fileinput" className="input_exel_file btn btn-warning">File Excel</label>
         <div id="dvExcel" />
 
-        <Bigtable items={this.state.items} day={this.state.dayExcel} mounth={this.state.mouthExcel} />
+        <Bigtable itemsLocal={this.state.items} day={this.state.dayExcel} mounth={this.state.mouthExcel} {...this.props}/>
       </div>
     );
   }

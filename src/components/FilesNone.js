@@ -29,8 +29,10 @@ class DownText extends Component {
     }
     render() {
         let allNameItems = this.props.dataNone;
-        console.log(allNameItems);
-        allNameItems=allNameItems.map(item=>{return item.toLowerCase().trim()})
+        let itemNoPrint = this.props.itemNoPrint;
+
+        console.log(itemNoPrint);
+        allNameItems = allNameItems.map(item => { return item.toLowerCase().trim() })
 
 
 
@@ -58,21 +60,46 @@ class DownText extends Component {
             <div className="mt-2">
                 <input id='file-input' type='file' className=" btn btn-info" onChange={this.checkFilesNone} multiple style={{ display: "none" }} />
                 <label htmlFor="file-input" className="input_exel btn btn-info">File Tif</label>
+                <div className="row">
+                    <div className="col-6">
+                        {
+                            (tableitemsnone.length !== 0) ? (<table className="table table-striped table_amounts">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">STT</th>
+                                        <th scope="col">Tên</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {tableitemsnone}
+                                </tbody>
+                            </table>) : ""
 
-                {
-                    (tableitemsnone.length !== 0) ? (<table className="table table-striped table_amounts">
-                        <thead>
-                            <tr>
-                                <th scope="col">STT</th>
-                                <th scope="col">Tên</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {tableitemsnone}
-                        </tbody>
-                    </table>) : ""
+                        }
+                    </div>
+                    <div className="col-6">
+                        {(itemNoPrint.length !== 0) ?
+                            <table className="table table-striped table_amounts">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">stt</th>
+                                        <th scope="col">Tên</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {itemNoPrint.map((param4, key) => <tr key={key}>
+                                        <th scope="row">{param4.stt}</th>
+                                        <td className="cot_row" onClick={() => this.copyText(param4.idClient)} style={{ cursor: "pointer" }}>{param4.idClient}</td>
 
-                }
+                                    </tr>)}
+                                </tbody>
+                            </table> : ""
+
+                        }
+                    </div>
+                </div>
+
+
 
             </div>
 

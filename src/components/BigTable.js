@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import BanTo from './BanTo';
-import BanNho from './BanNho';
+
 import ItemThua from './ItemThua';
 import _ from 'lodash';
 import DownText from './DownText';
@@ -65,9 +65,9 @@ class BigTable extends Component {
       changePrint = () => { this.setState({ changePrint: !this.state.changePrint }) }
       render() {
 
-            let items = this.props.items;
-
-
+            let items = this.props.itemsLocal;
+            let itemSheet = this.props.items.listItem;
+            let itemCheck = []
             let sumAmount, itemsFilter, itemThua;
             let amountAllPhoneCase = [];
             let allFileName = [];
@@ -79,7 +79,7 @@ class BigTable extends Component {
                   items = items.filter(item => (item.idClient !== undefined || item.amount !== undefined)); // lọc loại bỏ những item trắng
 
 
-                  items = items.map(item => { return { rePrint: false, ...item, amount: parseInt(item.amount), anyMore: false } }) // chuyển amount từ string sang number, thêm trạng thái anyMore:0
+                  items = items.map(item => { return { ...item, amount: parseInt(item.amount), anyMore: false } }) // chuyển amount từ string sang number, thêm trạng thái anyMore:0
 
 
                   sumAmount = items.reduce((sum, item) => { // tính tổng amount
@@ -417,9 +417,14 @@ class BigTable extends Component {
                   items = itemsFilter;
                   let pixel = this.state.phoneCase;
                   items = _.orderBy(items, ['phoneCase', 'idClient', 'idDesign'], ['asc', 'asc', 'desc']);
+
+
+
                   items = items.map((item, key) => { return { ...item, stt: key + 1 } });
                   dataSortItems = items;    // lấy danh sách để in bảng 12 ra màn hình
-                  items = items.map(item => { return { name: item.phoneCase, idDesign: item.idDesign.trim(), stt: item.stt, pixel: toPixel(item.phoneCase) } })
+                  console.log(items);
+                  
+                  items = items.map(item => { return {idClient:item.idClient, name: item.phoneCase, idDesign: item.idDesign.trim(), stt: item.stt, pixel: toPixel(item.phoneCase) } })
                   // console.log(items);
                   function toPixel(params) {
                         if (params === "i7") return pixel.i7
@@ -464,24 +469,20 @@ class BigTable extends Component {
                   let j = 0;
 
                   for (let i = 0; i <= items.length - 1; i++) {
-                        console.log(items[i]);
-
                         let hI = items[i].pixel.h;
                         let wI = items[i].pixel.w;
-
                         // console.log(items[i].name);
-
                         if (((hNow - hI) >= 0) && ((wNow - wI) >= 0)) {
                               if ((wLastCase !== wI)) {
                                     if (wNow - wI - wLastCase >= 0) {
-                                          console.log(hNow, wNow - wI, items[i].name, 1);
+
                                           arr[j].push(items[i]);
                                           hNow = hAll - hI;
                                           wNow = wNow - wLastCase;
                                           wLastCase = wI;
                                     }
                                     else {
-                                          console.log(hNow, wNow - wI, items[i].name, 2);
+
                                           j = j + 1;
                                           arr[j].push(items[i]);
                                           hNow = hAll - hI;
@@ -490,7 +491,7 @@ class BigTable extends Component {
                                     }
                               }
                               else {
-                                    console.log(hNow, wNow, items[i].name, 3);
+
                                     arr[j].push(items[i]);
                                     hNow = hNow - hI;
                                     wLastCase = wI;
@@ -499,7 +500,7 @@ class BigTable extends Component {
 
                         }
                         else if (((hNow - hI) >= 0) && ((wNow - wI) < 0)) {
-                              console.log(hNow, wNow, items[i].name, 4);
+
                               j = j + 1;
                               arr[j].push(items[i]);
                               hNow = hAll - hI;
@@ -508,16 +509,15 @@ class BigTable extends Component {
 
                         }
                         else if (((hNow - hI) < 0) && ((wNow - wLastCase - wI) >= 0)) {
-                              console.log(hNow, wNow, items[i].name, 5);
+
                               arr[j].push(items[i]);
                               hNow = hAll - hI;
                               wNow = wNow - wLastCase;
                               wLastCase = wI;
 
                         }
-
                         else if (((hNow - hI) < 0) && ((wNow - wLastCase - wI) < 0)) {
-                              console.log(hNow, wNow, items[i].name, 6);
+
                               j = j + 1;
                               arr[j].push(items[i]);
                               hNow = hAll - hI;
@@ -528,55 +528,93 @@ class BigTable extends Component {
                         }
                         else {
                               alert("alert")
-
-
                         }
-
                   }
                   arr = arr.filter(item => { return item.length > 0 });
                   // arr=arr.map(item=>{return item.map(param=>{return param.name })} )
-                  console.log(arr);
 
-                  console.log(items);
-
-
-
+                  itemCheck = JSON.parse(JSON.stringify(items));
             } // het if param!==undefi param.namened
 
-            return (
-                  <React.Fragment>
-                        <button type="button" className="btn btn-primary mb-5 absolute inan" onClick={this.changePrint}>in ấn</button>
-                        {(this.state.changePrint === true) ? "" :
-                              <div>
-                                    <FilesNone dataNone={allFileName} {...this.props} />
-                                    <DownText dataMayInTo={arr} {...this.props} />
-                                    <h1>Tổng tất cả: {sumAmount}</h1>
-                                    <button type="button" className="btn btn-primary mb-5" onClick={this.changeScreen}>đổi theme</button>
-                                    <ItemThua itemsThua={itemThua} {...this.props} />
-                              </div>
+            console.log(itemCheck);
+            console.log(itemSheet);
+            let itemNotPrint = [];
+            {
+                  for (let k = 0; k < itemCheck.length; k++) {
+                        let itemC =[];
+                        for (let m = 0; m < itemSheet.length; m++) {
+                              if ((itemSheet[m].idDesign.toLowerCase().trim() === itemCheck[k].idDesign.toLowerCase().trim())
+                                    && (itemSheet[m].phoneCase.trim().toLowerCase() === itemCheck[k].name.toLowerCase().trim())
+                              ) {
+                                    itemC.push(itemCheck[k]);
+                                    itemSheet[m] = null;
+                                    break;
+                              }
+
 
                         }
-                        <BanTo itemsBanTo={dataSortItems} printScreen={this.state.printScreen} {...this.props} />
+                        itemSheet=itemSheet.filter(param3=>param3!==null)
+                        // let itemC = itemSheet.filter(param4 => {
+                        //       console.log(param4.idDesign.toLowerCase().trim(), itemCheck[k].idDesign.toLowerCase().trim(), "-", param4.phoneCase.toLowerCase().trim(), itemCheck[k].name.toLowerCase().trim());
 
-                        <h2 style={{ textAlign: 'center', marginTop: 50 }}>Tổng tất cả: {sumAmount}</h2>
+
+                        //       if ((param4.idDesign.toLowerCase().trim() === itemCheck[k].idDesign.toLowerCase().trim())
+                        //             && (param4.phoneCase.trim().toLowerCase() === itemCheck[k].name.toLowerCase().trim())
+                        //       )
+                        //             return true
+                        //       else return false
+                        // })
+
+                        if (itemC.length !== 0) {
+                              itemNotPrint.push(itemC[0]);
+                        }
+                        console.log(itemSheet);
+                        console.log(itemNotPrint);
+
+                  }
+                  // let itemNotPrint = itemCheck.filter(param3 => {
+                  //       let itemC = itemSheet.filter(param4 => {
+                  //             return param4.idDesign.trim().toLowerCase() === param3.idDesign.toLowerCase().trim()
+                  //       })
+                  //       if (itemC.length !== 0) return true
+                  //       else return false;
+                  // })
+                  // console.log(itemNotPrint);
+
+                  return (
+                        <React.Fragment>
+                              <button type="button" className="btn btn-primary mb-5 absolute inan" onClick={this.changePrint}>in ấn</button>
+                              {(this.state.changePrint === true) ? "" :
+                                    <div>
+                                          <FilesNone dataNone={allFileName} itemNoPrint={itemNotPrint} {...this.props} />
+                                          <DownText dataMayInTo={arr} {...this.props} />
+                                          <h1>Tổng tất cả: {sumAmount}</h1>
+                                          <button type="button" className="btn btn-primary mb-5" onClick={this.changeScreen}>đổi theme</button>
+                                          <ItemThua itemsThua={itemThua} {...this.props} />
+                                    </div>
+
+                              }
+                              <BanTo itemsBanTo={dataSortItems} printScreen={this.state.printScreen} {...this.props} />
+
+                              <h2 style={{ textAlign: 'center', marginTop: 50 }}>Tổng tất cả: {sumAmount}</h2>
 
 
-                        <table className="table table-striped table_amounts">
-                              <thead>
-                                    <tr>
-                                          <th scope="col">STT</th>
-                                          <th scope="col">TÊn</th>
-                                          <th scope="col">SỐ LƯỢNG</th>
-                                    </tr>
-                              </thead>
-                              <tbody>
-                                    {amountAllPhoneCase}
-                              </tbody>
-                        </table>
+                              <table className="table table-striped table_amounts">
+                                    <thead>
+                                          <tr>
+                                                <th scope="col">STT</th>
+                                                <th scope="col">TÊn</th>
+                                                <th scope="col">SỐ LƯỢNG</th>
+                                          </tr>
+                                    </thead>
+                                    <tbody>
+                                          {amountAllPhoneCase}
+                                    </tbody>
+                              </table>
 
-                  </React.Fragment>
-            );
+                        </React.Fragment>
+                  );
+            }
       }
 }
-
 export default BigTable;

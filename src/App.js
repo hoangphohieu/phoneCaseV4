@@ -1,14 +1,15 @@
 import React from 'react';
 import './App.css';
-import InputExcel from './components/InputExcel';
+import InputExcelContainer from './containers/InputExcelContainer';
 import AboutMe from './components/AboutMe';
+
+
 function App() {
-  
   return (
     <React.Fragment>
       <p className="lm-gl">LM, GL</p>
-      <InputExcel/>
-      <AboutMe/>
+      <InputExcelContainer />
+      <AboutMe />
     </React.Fragment>
   );
 }
