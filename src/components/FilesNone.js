@@ -60,8 +60,8 @@ class DownText extends Component {
             <div className="mt-2">
                 <input id='file-input' type='file' className=" btn btn-info" onChange={this.checkFilesNone} multiple style={{ display: "none" }} />
                 <label htmlFor="file-input" className="input_exel btn btn-info">File Tif</label>
-                <div className="row">
-                    <div className="col-6">
+                <div className="row justify-content-center">
+                    <div className="col-5">
                         {
                             (tableitemsnone.length !== 0) ? (<table className="table table-striped table_amounts">
                                 <thead>
@@ -77,19 +77,21 @@ class DownText extends Component {
 
                         }
                     </div>
-                    <div className="col-6">
+                    <div className="col-5">
                         {(itemNoPrint.length !== 0) ?
                             <table className="table table-striped table_amounts">
                                 <thead>
                                     <tr>
-                                        <th scope="col">stt</th>
+                                        <th scope="col">stt APP</th>
                                         <th scope="col">Tên</th>
+                                        <th scope="col">code</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {itemNoPrint.map((param4, key) => <tr key={key}>
                                         <th scope="row">{param4.stt}</th>
                                         <td className="cot_row" onClick={() => this.copyText(param4.idClient)} style={{ cursor: "pointer" }}>{param4.idClient}</td>
+                                        <td className="cot_row" onClick={() => this.copyText(param4.code)} style={{ cursor: "pointer" }}>{param4.code}</td>
 
                                     </tr>)}
                                 </tbody>

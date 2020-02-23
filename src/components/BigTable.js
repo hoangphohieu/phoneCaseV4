@@ -17,7 +17,6 @@ class BigTable extends Component {
                         i6: { w: 791, h: 1630 },
                         i7: { w: 786, h: 1606 },// vân trơn
                         // i7: { w: 791, h: 1630 }, // default 
-
                         i6plus: { w: 909, h: 1866 },
                         i7plus: { w: 909, h: 1866 },
                         ix: { w: 827, h: 1677 },// vân trơn
@@ -27,8 +26,11 @@ class BigTable extends Component {
                         ixr: { w: 874, h: 1760 },
                         imax: { w: 909, h: 1866 },// vân trơn
                         // imax: { w: 898, h: 1831 },// default 
+                        i11pro: { w: 827, h: 1677 },
+                        i11: { w: 886, h: 1772 }, // vân trơn
+                        // i11: { w: 862, h: 1760 },// default 
+                        i11promax: { w: 886, h: 1831 },
 
-                        sa50: { w: 909, h: 1866 },
                         s7: { w: 803, h: 1655 },
                         s7e: { w: 827, h: 1760 },
                         s8plus: { w: 827, h: 1843 },
@@ -40,20 +42,27 @@ class BigTable extends Component {
                         s10: { w: 815, h: 1760 },
                         s10e: { w: 791, h: 1642 },
                         s10plus: { w: 862, h: 1854 },
+                        note10: { w: 850, h: 1783 },
+                        note10plus: { w: 909, h: 1913 },
+                        sa50: { w: 886, h: 1866 },
+                        sa50s: { w: 886, h: 1866 },
+                        sa70: { w: 886, h: 1925 },
+                        sa750: { w: 886, h: 1866 },
+                        sa6plus: { w: 886, h: 1866 },
+                        sj6plus: { w: 886, h: 1866 },
+
+
+                        hp20: { w: 815, h: 1736 },
                         hp30p: { w: 839, h: 1843 },
                         hp30: { w: 815, h: 1748 },
                         mate20p: { w: 827, h: 1843 },
                         hp20p: { w: 850, h: 1807 },
-                        oppoa5: { w: 874, h: 1819 },
-                        oneplus6: { w: 862, h: 1807 },
-                        note10: { w: 850, h: 1783 },
-                        note10plus: { w: 909, h: 1913 },
-                        i11pro: { w: 827, h: 1677 },
-                        i11: { w: 886, h: 1772 }, // vân trơn
-                        // i11: { w: 862, h: 1760 },// default 
 
-                        i11promax: { w: 886, h: 1831 },
-                        hp20: { w: 815, h: 1736 },
+                        oa5: { w: 874, h: 1819 },
+                        of11: { w: 886, h: 1925 },
+                        of11pro: { w: 886, h: 1878 },
+                        oneplus6: { w: 862, h: 1807 },
+
                         khay: { w: 28346, h: 15354 }
 
                   }
@@ -197,6 +206,35 @@ class BigTable extends Component {
                               || item.phoneCase.trim().toLowerCase().endsWith("a 50") === true
                         ) return { ...item, phoneCase: "sa50" }
 
+                        else if (item.phoneCase.trim().toLowerCase().endsWith("a50s") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("a 50s") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("a 50 s") === true
+                        ) return { ...item, phoneCase: "sa50s" }
+
+                        else if (item.phoneCase.trim().toLowerCase().endsWith("a750") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("a 750") === true
+                        ) return { ...item, phoneCase: "sa750" }
+
+                        else if (item.phoneCase.trim().toLowerCase().endsWith("a70") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("a 70") === true
+                        ) return { ...item, phoneCase: "sa70" }
+
+                        else if (item.phoneCase.trim().toLowerCase().endsWith("j6plus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("j6 plus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("j 6 plus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("j 6 +") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("j6 +") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("j6+") === true
+                        ) return { ...item, phoneCase: "sj6plus" }
+
+                        else if (item.phoneCase.trim().toLowerCase().endsWith("a6plus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("a6 plus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("a 6 plus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("a 6 +") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("a6 +") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("a6+") === true
+                        ) return { ...item, phoneCase: "sa6plus" }
+
                         else if (item.phoneCase.trim().toLowerCase().endsWith("s7") === true
                         ) return { ...item, phoneCase: "s7" }
 
@@ -285,16 +323,29 @@ class BigTable extends Component {
                               || item.phoneCase.trim().toLowerCase().endsWith("p20") === true
                         ) return { ...item, phoneCase: "hp20" }
 
-                        else if (item.phoneCase.trim().toLowerCase().endsWith("oppo a5") === true
-                              || item.phoneCase.trim().toLowerCase().endsWith("oppoa5") === true
-
-                        ) return { ...item, phoneCase: "oppoa5" }
-
 
                         else if (item.phoneCase.trim().toLowerCase().endsWith("mate 20pro") === true
                               || item.phoneCase.trim().toLowerCase().endsWith("mate20p") === true
                               || item.phoneCase.trim().toLowerCase().endsWith("mate 20 pro") === true
                         ) return { ...item, phoneCase: "mate20p" }
+
+
+                        else if (item.phoneCase.trim().toLowerCase().endsWith("oppo a5") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("oppoa5") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("oppo a 5") === true
+                        ) return { ...item, phoneCase: "oa5" }
+
+                        else if (item.phoneCase.trim().toLowerCase().endsWith("f11") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("f 11") === true
+                        ) return { ...item, phoneCase: "of11" }
+                        else if (item.phoneCase.trim().toLowerCase().endsWith("f11 pro") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("f11pro") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("f 11 pro") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("f 11 +") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("f 11+") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("f11+") === true
+                        ) return { ...item, phoneCase: "of11pro" }
+
 
                         else return { ...item, phoneCase: item.phoneCase }
                   });   // hết đổi tên
@@ -356,12 +407,23 @@ class BigTable extends Component {
 
                   itemsFilter = items.filter(item => {
                         return item.phoneCase === 'i6plus'
+                              || item.phoneCase === "i6"
+                              || item.phoneCase === "i7"
+                              || item.phoneCase === "ix"
+                              || item.phoneCase === "ixs"
                               || item.phoneCase === "i7plus"
                               || item.phoneCase === "ixr"
                               || item.phoneCase === "imax"
                               || item.phoneCase === "i11"
                               || item.phoneCase === "i11pro"
                               || item.phoneCase === "i11promax"
+
+                              || item.phoneCase === "s7"
+                              || item.phoneCase === "s8"
+                              || item.phoneCase === "s9"
+                              || item.phoneCase === "s10"
+                              || item.phoneCase === "s7e"
+                              || item.phoneCase === "s10e"
                               || item.phoneCase === "s8plus"
                               || item.phoneCase === "s9plus"
                               || item.phoneCase === "s10plus"
@@ -369,24 +431,25 @@ class BigTable extends Component {
                               || item.phoneCase === "note9"
                               || item.phoneCase === "note10"
                               || item.phoneCase === "note10plus"
+                              || item.phoneCase === "sa50"
+                              || item.phoneCase === "sa50"
+                              || item.phoneCase === "sa50s"
+                              || item.phoneCase === "sa750"
+                              || item.phoneCase === "sa70"
+                              || item.phoneCase === "sa6plus"
+                              || item.phoneCase === "sj6plus"
+
                               || item.phoneCase === "hp30"
                               || item.phoneCase === "hp30p"
                               || item.phoneCase === "hp20p"
                               || item.phoneCase === "hp20"
                               || item.phoneCase === "mate20p"
+
                               || item.phoneCase === "oneplus6"
-                              || item.phoneCase === "oppoa5"
-                              || item.phoneCase === "i6"
-                              || item.phoneCase === "i7"
-                              || item.phoneCase === "ix"
-                              || item.phoneCase === "ixs"
-                              || item.phoneCase === "s7"
-                              || item.phoneCase === "s8"
-                              || item.phoneCase === "s9"
-                              || item.phoneCase === "s10"
-                              || item.phoneCase === "s7e"
-                              || item.phoneCase === "s10e"
-                              || item.phoneCase === "sa50"
+                              || item.phoneCase === "oa5"
+                              || item.phoneCase === "of11"
+                              || item.phoneCase === "of11pro"
+
                   })
 
 
@@ -423,8 +486,8 @@ class BigTable extends Component {
                   items = items.map((item, key) => { return { ...item, stt: key + 1 } });
                   dataSortItems = items;    // lấy danh sách để in bảng 12 ra màn hình
                   console.log(items);
-                  
-                  items = items.map(item => { return {idClient:item.idClient, name: item.phoneCase, idDesign: item.idDesign.trim(), stt: item.stt, pixel: toPixel(item.phoneCase) } })
+
+                  items = items.map(item => { return { idClient: item.idClient, name: item.phoneCase, idDesign: item.idDesign.trim(), stt: item.stt, pixel: toPixel(item.phoneCase) } })
                   // console.log(items);
                   function toPixel(params) {
                         if (params === "i7") return pixel.i7
@@ -451,8 +514,15 @@ class BigTable extends Component {
                         else if (params === "hp20p") return pixel.hp20p
                         else if (params === "hp20") return pixel.hp20
                         else if (params === "mate20p") return pixel.mate20p
-                        else if (params === "oppoa5") return pixel.oppoa5
+                        else if (params === "oa5") return pixel.oa5
+                        else if (params === "of11") return pixel.of11
+                        else if (params === "of11pro") return pixel.of11pro
                         else if (params === "sa50") return pixel.sa50
+                        else if (params === "sa70") return pixel.sa70
+                        else if (params === "sa750") return pixel.sa750
+                        else if (params === "sa50s") return pixel.sa50s
+                        else if (params === "sa6plus") return pixel.sa6plus
+                        else if (params === "sj6plus") return pixel.sj6plus
                         else if (params === "oneplus6") return pixel.oneplus6
                         else if (params === "i11") return pixel.i11
                         else if (params === "i11pro") return pixel.i11pro
@@ -538,22 +608,26 @@ class BigTable extends Component {
 
             console.log(itemCheck);
             console.log(itemSheet);
+            itemSheet = itemSheet.filter(param4 => {
+                  return (param4.idDesign !== null && param4.phoneCase !== null)
+            })
             let itemNotPrint = [];
             {
                   for (let k = 0; k < itemCheck.length; k++) {
-                        let itemC =[];
+                        let itemC = [];
                         for (let m = 0; m < itemSheet.length; m++) {
                               if ((itemSheet[m].idDesign.toLowerCase().trim() === itemCheck[k].idDesign.toLowerCase().trim())
                                     && (itemSheet[m].phoneCase.trim().toLowerCase() === itemCheck[k].name.toLowerCase().trim())
                               ) {
-                                    itemC.push(itemCheck[k]);
+
+                                    itemC.push({ ...itemCheck[k], code: itemSheet[m].stt });
                                     itemSheet[m] = null;
                                     break;
                               }
 
 
                         }
-                        itemSheet=itemSheet.filter(param3=>param3!==null)
+                        itemSheet = itemSheet.filter(param3 => param3 !== null)
                         // let itemC = itemSheet.filter(param4 => {
                         //       console.log(param4.idDesign.toLowerCase().trim(), itemCheck[k].idDesign.toLowerCase().trim(), "-", param4.phoneCase.toLowerCase().trim(), itemCheck[k].name.toLowerCase().trim());
 
