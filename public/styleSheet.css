@@ -2,13 +2,18 @@
 
 p.lm-gl {
     position: absolute;
-    right: 20%;
+    right: 45%;
     top: 40px;
     font-size: 3rem;
     font-weight: 700;
     color: red;
+    visibility: hidden;
 }
-
+.table td, .table th {
+    padding: 0  !important;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+}
 p.amount-css {
     position: absolute;
     top: 0;

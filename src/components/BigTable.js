@@ -81,6 +81,8 @@ class BigTable extends Component {
             let amountAllPhoneCase = [];
             let allFileName = [];
             let dataSortItems = [];
+            let danhsach2 = [];
+
             let arr = [[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []];
             if (items != null) {
                   // console.log(items.Sheet1);
@@ -135,10 +137,13 @@ class BigTable extends Component {
                         else if (item.phoneCase.trim().toLowerCase().endsWith("xs") === true
                         ) return { ...item, phoneCase: "ixs" }
 
-                        else if (item.phoneCase.trim().toLowerCase().endsWith("6plus") === true
+                        else if (item.phoneCase.trim().toLowerCase().endsWith("iphone 6plus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("i 6splus") === true
                               || item.phoneCase.trim().toLowerCase().endsWith("6splus") === true
-                              || item.phoneCase.trim().toLowerCase().endsWith("6 splus") === true
-                              || item.phoneCase.trim().toLowerCase().endsWith("6 plus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("i6 splus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("i 6 plus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("iphone 6 plus") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("iphone6 plus") === true
                               || item.phoneCase.trim().toLowerCase().endsWith("ip6p") === true
                               || item.phoneCase.trim().toLowerCase().endsWith("ip 6p") === true
                               || item.phoneCase.trim().toLowerCase().endsWith("6/6s plus") === true
@@ -249,6 +254,7 @@ class BigTable extends Component {
 
                         else if (item.phoneCase.trim().toLowerCase().endsWith("s7 e") === true
                               || item.phoneCase.trim().toLowerCase().endsWith("s7 edge") === true
+                              || item.phoneCase.trim().toLowerCase().endsWith("s7edge") === true
                               || item.phoneCase.trim().toLowerCase().endsWith("s7e") === true
                         ) return { ...item, phoneCase: "s7e" }
 
@@ -387,7 +393,7 @@ class BigTable extends Component {
                         })
                   })
                   obj = _.flattenDeep(obj);
-                  console.log(items);
+                  // console.log(items);
 
                   for (let i = 0; i < items.length; i++) {
 
@@ -396,7 +402,7 @@ class BigTable extends Component {
                                     items[i].anyMore = true;
                               }
                         } catch (error) {
-                              console.log("anymore loi");
+                              // console.log("anymore loi");
 
                         }
 
@@ -455,7 +461,7 @@ class BigTable extends Component {
 
                   // lấy item thừa 
                   itemThua = _.difference(items, itemsFilter);
-                  console.log(itemThua);
+                  // console.log(itemThua);
 
                   // lấy idDesign để xem file nào chưa có
                   allFileName = items.map(item => { return item.idDesign })
@@ -463,12 +469,20 @@ class BigTable extends Component {
 
                   // đếm ốp
                   let allPhoneCase = [];
+                  let bodem = {};
+                  let danhSach = ["i6", "i6plus", "i7", "i7plus", "ix", "ixs", "ixr", "imax", "i11", "i11pro", "i11promax", "s7e", "s7", "s8", "s8plus", "note8", "s9", "s9plus", "note9", "s10e", "s10", "s10plus", "note10"
+                        , "note10plus", "sa50", "sa50s", "sa70", "sa6plus", "sj6plus", "of11", "of11pro", "oa5", "hp30", "hp30p", "hp20", "hp20p", "mate20p", "oneplus6"];
                   for (let j = 0; j < items.length; j++) { // lấy danh sách tên tất cả các đt trong items
                         if (allPhoneCase.indexOf(items[j].phoneCase) === -1)
                               allPhoneCase.push(items[j].phoneCase)
                   }
+
                   for (let j = 0; j < allPhoneCase.length; j++) {
-                        let onePhoneCase = items.filter(item => { return item.phoneCase === allPhoneCase[j] })
+                        let onePhoneCase = items.filter(item => { return item.phoneCase === allPhoneCase[j] });
+                        let tenaaa = allPhoneCase[j];
+                        bodem[tenaaa] = onePhoneCase.length;
+                        // console.log(bodem);
+
                         amountAllPhoneCase.push(
                               <tr key={j}>
                                     <th scope="row">{j + 1}</th>
@@ -476,6 +490,15 @@ class BigTable extends Component {
                                     <td className="cot_row">{onePhoneCase.length}</td>
                               </tr>)
                   }
+
+                  danhsach2 = danhSach.map(param => {
+                        if (bodem[param] !== undefined) return [param, bodem[param]]
+                        else return [param, 0]
+                        // console.log(param + " : " + bodem[param]);
+
+                  })
+                  console.log(danhsach2);
+
 
                   items = itemsFilter;
                   let pixel = this.state.phoneCase;
@@ -485,7 +508,7 @@ class BigTable extends Component {
 
                   items = items.map((item, key) => { return { ...item, stt: key + 1 } });
                   dataSortItems = items;    // lấy danh sách để in bảng 12 ra màn hình
-                  console.log(items);
+                  // console.log(items);
 
                   items = items.map(item => { return { idClient: item.idClient, name: item.phoneCase, idDesign: item.idDesign.trim(), stt: item.stt, pixel: toPixel(item.phoneCase) } })
                   // console.log(items);
@@ -606,8 +629,8 @@ class BigTable extends Component {
                   itemCheck = JSON.parse(JSON.stringify(items));
             } // het if param!==undefi param.namened
 
-            console.log(itemCheck);
-            console.log(itemSheet);
+            // console.log(itemCheck);
+            // console.log(itemSheet);
             itemSheet = itemSheet.filter(param4 => {
                   return (param4.idDesign !== null && param4.phoneCase !== null)
             })
@@ -619,41 +642,16 @@ class BigTable extends Component {
                               if ((itemSheet[m].idDesign.toLowerCase().trim() === itemCheck[k].idDesign.toLowerCase().trim())
                                     && (itemSheet[m].phoneCase.trim().toLowerCase() === itemCheck[k].name.toLowerCase().trim())
                               ) {
-
                                     itemC.push({ ...itemCheck[k], code: itemSheet[m].stt });
                                     itemSheet[m] = null;
                                     break;
                               }
-
-
                         }
                         itemSheet = itemSheet.filter(param3 => param3 !== null)
-                        // let itemC = itemSheet.filter(param4 => {
-                        //       console.log(param4.idDesign.toLowerCase().trim(), itemCheck[k].idDesign.toLowerCase().trim(), "-", param4.phoneCase.toLowerCase().trim(), itemCheck[k].name.toLowerCase().trim());
-
-
-                        //       if ((param4.idDesign.toLowerCase().trim() === itemCheck[k].idDesign.toLowerCase().trim())
-                        //             && (param4.phoneCase.trim().toLowerCase() === itemCheck[k].name.toLowerCase().trim())
-                        //       )
-                        //             return true
-                        //       else return false
-                        // })
-
                         if (itemC.length !== 0) {
                               itemNotPrint.push(itemC[0]);
                         }
-                        console.log(itemSheet);
-                        console.log(itemNotPrint);
-
                   }
-                  // let itemNotPrint = itemCheck.filter(param3 => {
-                  //       let itemC = itemSheet.filter(param4 => {
-                  //             return param4.idDesign.trim().toLowerCase() === param3.idDesign.toLowerCase().trim()
-                  //       })
-                  //       if (itemC.length !== 0) return true
-                  //       else return false;
-                  // })
-                  // console.log(itemNotPrint);
 
                   return (
                         <React.Fragment>
@@ -671,20 +669,40 @@ class BigTable extends Component {
                               <BanTo itemsBanTo={dataSortItems} printScreen={this.state.printScreen} {...this.props} />
 
                               <h2 style={{ textAlign: 'center', marginTop: 50 }}>Tổng tất cả: {sumAmount}</h2>
+                              <div className="row justify-content-center">
+                                    <div className="col-5">
 
+                                          <table className="table table-striped table_amounts">
+                                                <thead>
+                                                      <tr>
+                                                            <th scope="col">STT</th>
+                                                            <th scope="col">TÊn</th>
+                                                            <th scope="col">SỐ LƯỢNG</th>
+                                                      </tr>
+                                                </thead>
+                                                <tbody>
+                                                      {amountAllPhoneCase}
+                                                </tbody>
+                                          </table>
+                                    </div>
+                                    <div className="col-5">
+                                          <table className="table  table_amounts">
+                                                <thead>
+                                                      <tr>
+                                                            <th scope="col">SỐ LƯỢNG</th>
+                                                      </tr>
+                                                </thead>
+                                                <tbody>
+                                                      {danhsach2.map((param,key) => <tr key={key}>
+                                                            {/* <td className="cot_row">{param[0]}</td> */}
+                                                            <td className="cot_row">{param[1]}</td>
+                                                      </tr>)}
+                                                </tbody>
+                                          </table>
+                                    </div>
 
-                              <table className="table table-striped table_amounts">
-                                    <thead>
-                                          <tr>
-                                                <th scope="col">STT</th>
-                                                <th scope="col">TÊn</th>
-                                                <th scope="col">SỐ LƯỢNG</th>
-                                          </tr>
-                                    </thead>
-                                    <tbody>
-                                          {amountAllPhoneCase}
-                                    </tbody>
-                              </table>
+                              </div>
+
 
                         </React.Fragment>
                   );
